@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Softmax:
     # 全连接层，同时使用softmax激活函数。
 
@@ -20,10 +21,10 @@ class Softmax:
         self.last_input = input
 
         input_len, nodes = self.weights.shape
-
+        # 这是每个分类的概率
         totals = np.dot(input, self.weights) + self.biases
         self.last_totals = totals
-
+        # softmax归一化，同时充当激活函数
         exp = np.exp(totals)
         return exp / np.sum(exp, axis=0)
 

@@ -12,7 +12,7 @@ test_labels = mnist.test_labels()[:1000]
 
 # 初始化CNN网络的各个层
 conv = Conv3x3(8)  # 数据变化：28x28x1 的图像 -> 26x26x8   这个卷积层会应用 8 个不同的 3x3 的卷积核输出 8 个特征图
-pool = MaxPool2()  # 数据变化：26x26x8 的图像 -> 13x13x8
+pool = MaxPool2()  # 数据变化：26x26x8 的图像 -> 13x13x8  作用：减少特征图的维度，同时保留重要的信息
 softmax = Softmax(13 * 13 * 8, 10)  # 数据变化：从 13x13x8 的图像到 10个输出类别    这是全连接层和softmax激活层
 
 
@@ -26,9 +26,10 @@ def forward(image, label):
     out = conv.forward((image / 255) - 0.5)
     out = pool.forward(out)
     out = softmax.forward(out)
-
+    # 使用交叉熵作为损失函数
     # 计算交叉熵损失和准确率。np.log() 是自然对数。
     loss = -np.log(out[label])
+    # 看看有没有预测对
     acc = 1 if np.argmax(out) == label else 0
 
     return out, loss, acc
