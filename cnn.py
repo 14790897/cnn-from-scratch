@@ -80,7 +80,7 @@ for epoch in range(3):
             )
             loss = 0
             num_correct = 0
-
+        # 这里是每次只训练一张，这个是随机梯度下降
         l, acc = train(im, label)
         loss += l
         num_correct += acc
